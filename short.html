@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenlee's: the short version</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700;800&family=Bungee&family=Yellowtail&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Same diner world as the full page, cut down to one scroll: a stack of order tickets. */
+  --bg: #EAF3EC; --panel: #FFF9EC; --ink: #15231C; --muted: #4A5A50; --cherry: #C4302B; --amber: #E9A23B; --clover: #1E6B45;
+  --display: "Bungee", "Arial Black", Impact, sans-serif;
+  --script: "Yellowtail", "Brush Script MT", cursive;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --label: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 18px/1.55 var(--body); }
+a { color: var(--cherry); font-weight: 700; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.wrap { width: min(760px, 100% - 32px); margin-inline: auto; }
+.checker { height: 18px; background: repeating-conic-gradient(var(--ink) 0 25%, var(--panel) 0 50%) 0 0 / 18px 18px; }
+header { padding: 28px 0 24px; display: grid; grid-template-columns: 150px 1fr; gap: 24px; align-items: center; }
+header svg { width: 100%; height: auto; display: block; }
+h1 { margin: 0; font: 400 clamp(52px, 9vw, 76px)/.95 var(--script); color: var(--cherry); text-shadow: 3px 3px 0 var(--ink); }
+.sub { font-family: var(--display); color: var(--clover); font-size: 20px; margin-top: 6px; }
+.slogan { font-weight: 800; font-size: 22px; margin-top: 12px; }
+.full { display: inline-block; margin-top: 10px; font-family: var(--label); text-transform: uppercase; letter-spacing: .08em; font-size: 15px; }
+main { display: grid; gap: 14px; padding: 22px 0 48px; }
+.t { background: var(--panel); border: 2px solid var(--ink); border-radius: 12px; padding: 16px 20px; box-shadow: 4px 4px 0 var(--ink); }
+h2 { margin: 0 0 6px; font: 400 19px/1.2 var(--display); color: var(--clover); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h2 small { font: 700 13px/1.6 var(--label); text-transform: uppercase; letter-spacing: .1em; color: var(--cherry); }
+p { margin: 0; }
+p + p, p + ul, ul + p { margin-top: 8px; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+b { font-weight: 800; }
+.big { font: 400 26px/1 var(--display); color: var(--cherry); }
+@media (max-width: 520px) { header { grid-template-columns: 1fr; } header > div:first-child { max-width: 170px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 440" role="img" aria-labelledby="short-t"><title id="short-t">Greenlee's Roadside Grill logo: a round retro badge with a rising sun, a maple leaf and a shamrock, a green meadow with a road, and a script banner</title><defs><clipPath id="short-in"><circle cx="220" cy="220" r="144"/></clipPath><path id="short-top" d="M57,220 A163,163 0 0 1 383,220"/><path id="short-bot" d="M35,220 A185,185 0 0 0 405,220"/></defs><circle cx="220" cy="220" r="206" fill="#15231C"/><circle cx="220" cy="220" r="198" fill="#C4302B"/><circle cx="220" cy="220" r="150" fill="#15231C"/><g clip-path="url(#short-in)"><rect x="60" y="60" width="320" height="320" fill="#CFE7D7"/><polygon points="220,140 183.8,-117.5 256.2,-117.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 376.5,-67.6 427.6,-16.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 477.5,103.8 477.5,176.2" fill="#E9A23B" opacity=".38"/><polygon points="220,140 427.6,296.5 376.5,347.6" fill="#E9A23B" opacity=".38"/><polygon points="220,140 256.2,397.5 183.8,397.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 63.5,347.6 12.4,296.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 -37.5,176.2 -37.5,103.8" fill="#E9A23B" opacity=".38"/><polygon points="220,140 12.4,-16.5 63.5,-67.6" fill="#E9A23B" opacity=".38"/><circle cx="220" cy="140" r="52" fill="#F2B84B" stroke="#15231C" stroke-width="5"/><path d="M60,300 Q140,262 228,284 Q318,304 380,268 L380,380 L60,380 Z" fill="#3BA36A" stroke="#15231C" stroke-width="4"/><path d="M60,330 Q150,292 246,320 Q330,344 380,306 L380,380 L60,380 Z" fill="#1E6B45" stroke="#15231C" stroke-width="4"/><polygon points="214,283 226,283 292,372 148,372" fill="#2B3A33" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><rect x="218.9" y="292" width="2.2" height="8" fill="#E9A23B"/><rect x="218.4" y="310" width="3.2" height="12" fill="#E9A23B"/><rect x="217.8" y="334" width="4.4" height="18" fill="#E9A23B"/></g><g transform="translate(196 136) rotate(-16) scale(0.82)"><polygon points="0,-50 8,-33 18,-38 14,-13 31,-25 28,-15 46,-19 37,-3 47,1 23,14 28,25 5,19 2,23 2,50 -2,50 -2,23 -5,19 -28,25 -23,14 -47,1 -37,-3 -46,-19 -28,-15 -31,-25 -14,-13 -18,-38 -8,-33" fill="#C4302B" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/></g><g transform="translate(246 141) rotate(14) scale(0.92)"><path d="M0,2 C3,16 9,27 19,36" fill="none" stroke="#FFF6E3" stroke-width="10.5" stroke-linecap="round"/><path d="M0,2 C3,16 9,27 19,36" fill="none" stroke="#1E6B45" stroke-width="6" stroke-linecap="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(0)" fill="#1E6B45" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(120)" fill="#1E6B45" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(240)" fill="#1E6B45" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/></g><text font-family="Bungee, 'Arial Black', sans-serif" font-size="29" fill="#FFF6E3" letter-spacing="3"><textPath href="#short-top" startOffset="50%" text-anchor="middle">ROADSIDE GRILL</textPath></text><text font-family="Bungee, 'Arial Black', sans-serif" font-size="19" fill="#FFF6E3" letter-spacing="2.5"><textPath href="#short-bot" startOffset="50%" text-anchor="middle">IRISH &amp; FRENCH CANADIAN</textPath></text><circle cx="55" cy="165" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><circle cx="385" cy="165" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><circle cx="56" cy="279" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><circle cx="384" cy="279" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><polygon points="62,198 4,198 24,230 4,262 62,262" fill="#C4302B" stroke="#15231C" stroke-width="5" stroke-linejoin="round"/><polygon points="378,198 436,198 416,230 436,262 378,262" fill="#C4302B" stroke="#15231C" stroke-width="5" stroke-linejoin="round"/><polygon points="44,244 62,262 62,244" fill="#15231C" stroke="#15231C" stroke-width="4" stroke-linejoin="round"/><polygon points="396,244 378,262 378,244" fill="#15231C" stroke="#15231C" stroke-width="4" stroke-linejoin="round"/><rect x="44" y="180" width="352" height="64" fill="#FFF6E3" stroke="#15231C" stroke-width="5"/><text x="223" y="235" text-anchor="middle" font-family="Yellowtail, 'Brush Script MT', cursive" font-size="62" fill="#15231C">Greenlee&#8217;s</text><text x="220" y="232" text-anchor="middle" font-family="Yellowtail, 'Brush Script MT', cursive" font-size="62" fill="#C4302B">Greenlee&#8217;s</text></svg></div>
+    <div>
+      <h1>Greenlee&#8217;s</h1>
+      <div class="sub">Roadside Grill</div>
+      <p class="slogan">Get your sizzling, salty greens at Greenlee&#8217;s.</p>
+      <a class="full" href="index.html">see the full version &#8594;</a>
+    </div>
+  </header>
+</div>
+<div class="checker" aria-hidden="true"></div>
+<div class="wrap">
+<main>
+  <section class="t">
+    <h2>The truck <small>Step 1</small></h2>
+    <p>it&#8217;s basically a 1960s diner on wheels, with chrome, a checkerboard stripe and a striped awning, serving diner food with an irish twist. it&#8217;s named after me (Danny Greenlee).</p>
+    <p><b>Logo:</b> the shamrock and maple leaf are the truck&#8217;s roots, the sun is for energy, and the green meadow is there because greenlee literally means green meadow.</p>
+    <p><b>Slogan:</b> sizzling is the sound, salty is the taste, and greens is what you see (and also my name lol).</p>
+  </section>
+
+  <section class="t">
+    <h2>The meal <small>Step 2</small></h2>
+    <ul>
+      <li><b>Wagyu Chopped Greens:</b> seared wagyu chopped over kale, cabbage, carrots and apple with whole wheat croutons and flaky salt</li>
+      <li><b>Sweet &amp; Sour Irish Buffalo Potatoes:</b> roasted potatoes in honey buffalo sauce with a yogurt dip</li>
+      <li><b>Emerald Twist:</b> fizzy orange cream with a root beer twist (orange juice, sparkling water, milk float)</li>
+    </ul>
+    <p><b>Why it&#8217;s craveable:</b> it&#8217;s just really good. hot steak on cold crunchy greens, and it&#8217;s salty, sweet, sour and a little spicy all at once.</p>
+  </section>
+
+  <section class="t">
+    <h2>MyPlate + macros <small>Step 2</small></h2>
+    <p>veggies 40% (greens + potatoes), grains 30% (whole wheat croutons), protein 20% (wagyu), fruit 10% (apple + OJ), and dairy in the cup.</p>
+    <p>the whole meal is <b>820 calories</b> with <b>47% carbs, 19% protein, 34% fat</b>, and all three are inside the recommended ranges.</p>
+  </section>
+
+  <section class="t">
+    <h2>Good ingredients <small>Step 2</small></h2>
+    <ul>
+      <li><b>complex carbs:</b> potatoes (root veggie) and 100% whole wheat croutons, with 13 g of fiber</li>
+      <li><b>healthy fats:</b> olive oil and pumpkin seeds, and we roast everything so nothing&#8217;s fried</li>
+      <li><b>real food only:</b> just 4 g of added sugar in the whole meal (one teaspoon of honey)</li>
+    </ul>
+  </section>
+
+  <section class="t">
+    <h2>Vitamins + minerals <small>Step 2</small></h2>
+    <ul>
+      <li><b>fat-soluble:</b> vitamin K, 226% of your day, from the kale and cabbage</li>
+      <li><b>water-soluble:</b> vitamin C at 169% from the OJ and kale, plus B12 at 113% from the wagyu</li>
+      <li><b>mineral:</b> potassium, 50% of your day, mostly from the potatoes</li>
+    </ul>
+  </section>
+
+  <section class="t">
+    <h2>Food safety <small>Step 3</small></h2>
+    <p><span class="big">145&#176;F</span> &nbsp;the steak gets cooked to 145&#176;F, then rests 3 minutes before we chop it.</p>
+    <ul>
+      <li><b>clean:</b> wash hands for 20 seconds and sanitize every board and counter</li>
+      <li><b>separate:</b> red board for raw beef, green board for veggies, and they never touch</li>
+      <li><b>cook:</b> a food thermometer goes in the thickest part of every single steak</li>
+    </ul>
+    <p><b>sell by vs use by:</b> sell by is for the store (how long to keep it on the shelf), and use by is the last day to use it at its best. anything past use by gets tossed.</p>
+  </section>
+</main>
+</div>
+</body>
+</html>
