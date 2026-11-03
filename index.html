@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenlee's Roadside Grill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700;800;900&family=Bungee&family=Yellowtail&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout idea: a 1960s roadside diner. Chrome-strip nav, checkerboard dividers, a felt letter-board menu, order-ticket step tags. */
+  --bg: #EAF3EC;
+  --panel: #FFF9EC;
+  --mint: #CFE7D7;
+  --ink: #15231C;
+  --muted: #4A5A50;
+  --cherry: #C4302B;
+  --amber: #E9A23B;
+  --clover: #1E6B45;
+  --chrome: #D3DBD7;
+  --line: #D8CFB8;
+  --display: "Bungee", "Arial Black", Impact, sans-serif;
+  --script: "Yellowtail", "Brush Script MT", cursive;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --label: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  /* chart palette, checked with the colorblind validator */
+  --c-carb: #D9861C; --c-prot: #B8322C; --c-fat: #3BA36A;
+  --c-grain: #D9861C; --c-protein: #9150B5; --c-veg: #3BA36A; --c-fruit: #C4302B; --c-dairy: #2A8FD0;
+  --c-bar: #25844D;
+  --good: #1E7A45;
+  --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { margin: 0; font-weight: 400; line-height: 1.1; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--cherry); text-underline-offset: 3px; }
+img, svg { max-width: 100%; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; background: var(--amber); color: var(--ink); padding: 8px 14px; font-weight: 700; z-index: 50; border-radius: 6px; }
+.skip:focus { top: 12px; }
+.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+.label { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; }
+
+/* ---------- top bar ---------- */
+.topbar { position: sticky; top: 0; z-index: 30; background: var(--ink); color: var(--panel); }
+.topbar .wrap { display: flex; align-items: center; gap: var(--s5); min-height: 58px; }
+.topbar nav { flex: 1; min-width: 0; }
+.brandmark { font-family: var(--script); font-size: 30px; line-height: 1; color: var(--panel); text-decoration: none; padding-top: 4px; white-space: nowrap; }
+.navlinks { display: flex; gap: var(--s5); overflow-x: auto; scrollbar-width: none; flex: 1; margin: 0; padding: 0; list-style: none; }
+.navlinks::-webkit-scrollbar { display: none; }
+.navlinks a { display: block; font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; color: var(--panel); text-decoration: none; padding: 17px 0 15px; border-bottom: 3px solid transparent; white-space: nowrap; }
+.navlinks a:hover { color: var(--amber); }
+.navlinks a[aria-current="true"] { border-bottom-color: var(--amber); }
+.btn { font: 700 15px/1 var(--label); text-transform: uppercase; letter-spacing: .08em; border: 2px solid var(--ink); border-radius: 8px; padding: 10px 14px; cursor: pointer; background: var(--panel); color: var(--ink); box-shadow: 0 3px 0 var(--ink); transition: transform .08s ease, box-shadow .08s ease, background-color .12s ease; }
+.btn:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 4px 0 var(--ink); }
+.btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+.btn-amber { background: var(--amber); }
+.btn-amber:hover { background: #F2B85E; }
+.topbar .btn { box-shadow: 0 3px 0 #000; border-color: #000; white-space: nowrap; }
+.chrome { height: 8px; background: linear-gradient(180deg, #F6F8F7 0%, #AEB9B4 55%, #E4EAE7 100%); border-bottom: 2px solid var(--ink); }
+.checker { height: 24px; background: repeating-conic-gradient(var(--ink) 0 25%, var(--panel) 0 50%) 0 0 / 24px 24px; border-block: 2px solid var(--ink); }
+
+/* ---------- hero ---------- */
+.hero { padding: var(--s7) 0 var(--s8); }
+.hero-grid { display: grid; grid-template-columns: minmax(260px, 420px) 1fr; gap: 56px; align-items: center; }
+.hero-logo svg { display: block; width: 100%; height: auto; }
+.wordmark { font-family: var(--script); font-size: clamp(68px, 10vw, 132px); line-height: .9; color: var(--cherry); text-shadow: 4px 4px 0 var(--ink); padding-bottom: 6px; }
+.wordmark-sub { display: block; font-family: var(--display); font-size: clamp(24px, 3.2vw, 38px); letter-spacing: .05em; color: var(--clover); margin-top: var(--s3); text-shadow: none; line-height: 1.1; }
+.slogan { margin-top: var(--s5); font-size: clamp(23px, 2.6vw, 31px); font-weight: 800; line-height: 1.25; max-width: 24ch; }
+.hero-theme { margin-top: var(--s4); font-size: 19px; color: var(--muted); max-width: 46ch; }
+.owner { margin-top: var(--s4); color: var(--ink); }
+.owner b { font-family: var(--script); font-weight: 400; font-size: 28px; color: var(--cherry); text-transform: none; letter-spacing: 0; margin-left: 4px; }
+.quickfacts { margin: var(--s5) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--s2); }
+.quickfacts li { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 15px; padding: 7px 14px; background: var(--panel); border: 2px solid var(--ink); border-radius: 999px; }
+
+/* ---------- sections ---------- */
+main section { padding: var(--s8) 0; scroll-margin-top: 58px; }
+main section.alt { background: var(--panel); }
+.sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--s5); flex-wrap: wrap; margin-bottom: var(--s6); }
+h2 { font-family: var(--display); font-size: clamp(30px, 4.4vw, 46px); color: var(--clover); max-width: 20ch; }
+.ticket { flex: none; background: var(--panel); border: 2px solid var(--ink); border-radius: 6px; padding: 10px 16px 12px; box-shadow: 4px 4px 0 var(--ink); transform: rotate(1.2deg); }
+section.alt .ticket { background: var(--bg); }
+.ticket span { display: block; font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 13px; color: var(--muted); }
+.ticket b { display: block; font-family: var(--display); font-weight: 400; font-size: 20px; color: var(--cherry); line-height: 1.15; }
+.lead { font-size: 20px; color: var(--muted); max-width: 64ch; }
+h3 { font-family: var(--body); font-weight: 800; font-size: 23px; color: var(--ink); }
+.kicker { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 14px; color: var(--cherry); }
+.card { background: var(--panel); border: 2px solid var(--ink); border-radius: 14px; padding: var(--s5); }
+section.alt .card { background: #fff; }
+
+/* ---------- brand ---------- */
+.truck-stage { margin-top: var(--s2); }
+.truck-stage svg { display: block; width: 100%; height: auto; }
+.road { height: 22px; margin-top: -26px; background: var(--ink); border-radius: 4px; position: relative; overflow: hidden; }
+.road::after { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 4px; background: repeating-linear-gradient(90deg, var(--amber) 0 44px, transparent 44px 88px); }
+.brand-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--s7); margin-top: var(--s7); align-items: start; }
+.prose { display: grid; gap: var(--s4); }
+.prose p { max-width: 62ch; }
+.slogan-card { background: var(--ink); color: var(--panel); border-radius: 16px; padding: var(--s6); display: grid; gap: var(--s4); }
+.slogan-card .kicker { color: var(--amber); }
+.slogan-card q { font-size: 27px; font-weight: 800; line-height: 1.25; quotes: "\201C" "\201D"; }
+.senses { margin: 0; display: grid; gap: var(--s3); }
+.senses div { display: grid; grid-template-columns: 74px 1fr; gap: var(--s3); align-items: baseline; border-top: 1px solid rgba(255, 249, 236, .22); padding-top: var(--s3); }
+.senses dt { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 14px; color: var(--amber); }
+.senses dd { margin: 0; font-size: 17px; }
+.logo-explain { display: grid; grid-template-columns: minmax(220px, 320px) 1fr; gap: var(--s7); align-items: center; margin-top: var(--s8); }
+.logo-explain svg { display: block; width: 100%; height: auto; }
+.logo-points { margin: var(--s4) 0 0; padding: 0; list-style: none; counter-reset: pt; display: grid; gap: var(--s4); }
+.logo-points li { counter-increment: pt; display: grid; grid-template-columns: 40px 1fr; gap: var(--s3); }
+.logo-points li::before { content: counter(pt); font-family: var(--display); font-size: 18px; width: 34px; height: 34px; border-radius: 50%; background: var(--cherry); color: var(--panel); display: grid; place-items: center; border: 2px solid var(--ink); }
+.logo-points b { display: block; font-size: 19px; }
+.logo-points p { color: var(--muted); font-size: 17px; }
+.kit { margin-top: var(--s8); display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s6); align-items: start; }
+.swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--s3); margin-top: var(--s4); }
+.swatch { border: 2px solid var(--ink); border-radius: 10px; overflow: hidden; background: var(--panel); }
+.swatch i { display: block; height: 64px; border-bottom: 2px solid var(--ink); }
+.swatch div { padding: 8px 10px 10px; font-size: 14px; line-height: 1.35; }
+.swatch b { display: block; font-family: var(--label); text-transform: uppercase; letter-spacing: .06em; font-size: 14px; }
+.swatch code { font-size: 12px; color: var(--muted); }
+.typekit { display: grid; gap: var(--s3); margin-top: var(--s4); }
+.typekit div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s4); border-bottom: 1px solid var(--line); padding-bottom: var(--s2); }
+.typekit span { font-size: 14px; color: var(--muted); text-align: right; }
+
+/* ---------- menu board ---------- */
+.board-frame { background: #7A4E2B; border: 3px solid var(--ink); border-radius: 16px; padding: 14px; box-shadow: 0 8px 0 var(--ink); }
+.board { background-color: #1A1C1B; background-image: repeating-linear-gradient(180deg, rgba(255, 255, 255, .055) 0 2px, transparent 2px 10px); border-radius: 6px; color: #F4F1E8; padding: clamp(20px, 4vw, 44px); }
+.board-title { text-align: center; font-family: var(--display); font-size: clamp(26px, 4vw, 40px); letter-spacing: .06em; color: #fff; }
+.board-sub { text-align: center; font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .2em; font-size: 14px; color: var(--amber); margin-top: 6px; }
+.items { margin-top: var(--s6); display: grid; }
+.item { padding: var(--s5) 0; border-top: 2px solid rgba(255, 255, 255, .14); display: grid; gap: var(--s2); }
+.item:first-child { border-top: 0; }
+.item-row { display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; }
+.course { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: 14px; color: var(--amber); width: 64px; flex: none; }
+.item-name { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: clamp(21px, 2.8vw, 28px); color: #fff; }
+.dots { flex: 1; min-width: 24px; border-bottom: 3px dotted rgba(255, 255, 255, .45); transform: translateY(-6px); }
+.price { font-family: var(--label); font-weight: 700; font-size: clamp(21px, 2.8vw, 28px); letter-spacing: .06em; color: #fff; }
+.item-desc { color: #D6D3C8; max-width: 70ch; margin-left: 76px; }
+.item-cal { font-family: var(--label); font-weight: 700; letter-spacing: .08em; font-size: 14px; color: var(--amber); margin-left: 76px; text-transform: uppercase; }
+.combo { margin-top: var(--s4); background: var(--cherry); color: #fff; border-radius: 8px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: var(--s4); flex-wrap: wrap; }
+.combo b { font-family: var(--display); font-weight: 400; font-size: clamp(19px, 2.6vw, 26px); letter-spacing: .04em; }
+.combo span { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 15px; }
+.menu-note { margin-top: var(--s6); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s6); }
+.menu-note p { color: var(--muted); }
+
+/* ---------- MyPlate + numbers ---------- */
+.plate-grid { display: grid; grid-template-columns: minmax(280px, 460px) 1fr; gap: var(--s7); align-items: center; }
+.plate-grid svg { display: block; width: 100%; height: auto; overflow: visible; }
+.plate-grid .sector { cursor: default; outline: none; }
+.plate-grid .sector path { transition: filter .12s ease; }
+.plate-grid .sector:hover path, .plate-grid .sector:focus-visible path { filter: brightness(1.12); }
+.plate-grid .sector:focus-visible path { stroke: var(--ink); stroke-width: 4; }
+table { width: 100%; border-collapse: collapse; font-size: 17px; }
+th, td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; color: var(--muted); border-bottom: 2px solid var(--ink); }
+td.num, th.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plate-table td:first-child { white-space: nowrap; }
+.swatch-dot { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 8px; vertical-align: -2px; }
+.table-scroll { overflow-x: auto; }
+.numbers { margin-top: var(--s8); display: grid; grid-template-columns: minmax(280px, 340px) 1fr; gap: var(--s7); align-items: start; }
+
+/* Nutrition Facts panel (FDA layout) */
+.nf { background: #fff; color: #000; border: 2px solid #000; padding: 6px 10px 10px; font-family: "Barlow", Helvetica, Arial, sans-serif; line-height: 1.25; }
+.nf h3 { font-family: inherit; font-weight: 900; font-size: 38px; letter-spacing: -.5px; line-height: 1; color: #000; margin: 2px 0 4px; }
+.nf .rule-8 { border-top: 10px solid #000; margin: 4px 0 2px; }
+.nf .rule-4 { border-top: 5px solid #000; margin: 2px 0; }
+.nf .r { display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid #000; padding: 3px 0; font-size: 15px; }
+.nf .r:first-of-type { border-top: 0; }
+.nf .i1 { padding-left: 16px; }
+.nf .i2 { padding-left: 30px; }
+.nf .cal { display: flex; justify-content: space-between; align-items: flex-end; font-weight: 900; margin: 0; }
+.nf .cal span:first-child { font-size: 24px; }
+.nf .cal span:last-child { font-size: 42px; line-height: 1; }
+.nf .serv { display: flex; justify-content: space-between; gap: 10px; font-weight: 800; font-size: 16px; }
+.nf .dvh { text-align: right; font-weight: 800; font-size: 14px; padding: 3px 0; }
+.nf small { display: block; font-size: 12px; line-height: 1.35; border-top: 5px solid #000; padding-top: 6px; margin-top: 4px; }
+.nf b { font-weight: 800; }
+
+.macro-block { display: grid; gap: var(--s5); }
+.segbar { display: flex; gap: 2px; height: 28px; background: var(--panel); }
+.seg { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 10px; font-family: var(--label); font-weight: 700; font-size: 16px; letter-spacing: .04em; outline: none; }
+.seg:focus-visible { box-shadow: 0 0 0 3px var(--amber); }
+.seg:hover { filter: brightness(1.08); }
+.legend { display: flex; flex-wrap: wrap; gap: var(--s4); margin: 0; padding: 0; list-style: none; font-size: 16px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 7px; vertical-align: -2px; }
+.ok { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.ok::before { content: "\2713"; display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--good); color: #fff; font-size: 13px; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); }
+.stat { background: var(--panel); border: 2px solid var(--ink); border-radius: 12px; padding: 14px 16px; }
+.stat b { display: block; font-family: var(--body); font-weight: 800; font-size: 34px; line-height: 1.05; color: var(--ink); }
+.stat span { display: block; margin-top: 4px; font-size: 15px; color: var(--muted); line-height: 1.35; }
+.fine { font-size: 15px; color: var(--muted); }
+
+/* ---------- ingredients ---------- */
+.ing-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: var(--s7); align-items: start; }
+.swaps td:first-child { color: var(--muted); }
+.swaps td:first-child s { text-decoration-color: var(--cherry); text-decoration-thickness: 2px; }
+.swaps td:last-child b { color: var(--clover); }
+.principles { display: grid; gap: var(--s5); }
+.principle h3 { font-size: 21px; margin-bottom: 6px; }
+.principle p { color: var(--muted); font-size: 17px; }
+.principle .big { font-family: var(--body); font-weight: 800; font-size: 17px; color: var(--ink); }
+.chips { margin: var(--s4) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--s2); }
+.chips li { font-size: 15px; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: #fff; border: 1.5px solid var(--ink); }
+details.more { margin-top: var(--s5); border: 2px solid var(--ink); border-radius: 12px; background: #fff; }
+details.more summary { cursor: pointer; padding: 14px 18px; font-weight: 800; list-style: none; display: flex; justify-content: space-between; gap: var(--s3); }
+details.more summary::-webkit-details-marker { display: none; }
+details.more summary::after { content: "+"; font-family: var(--display); color: var(--cherry); }
+details.more[open] summary::after { content: "\2212"; }
+details.more .inner { padding: 0 18px 18px; }
+.recipe-note { margin-top: var(--s3); font-size: 15px; color: var(--muted); }
+
+/* ---------- vitamins ---------- */
+.required { display: grid; gap: var(--s4); }
+.req { display: grid; grid-template-columns: 210px 1fr 150px; gap: var(--s5); align-items: center; background: var(--panel); border: 2px solid var(--ink); border-radius: 14px; padding: 20px 24px; }
+.req .kicker { display: block; }
+.req h3 { font-size: 24px; margin-top: 4px; }
+.req p { color: var(--ink); font-size: 17px; }
+.req .src { color: var(--muted); font-size: 15px; margin-top: 6px; }
+.req .pct { text-align: right; }
+.req .pct b { display: block; font-weight: 800; font-size: 40px; line-height: 1; }
+.req .pct span { font-size: 14px; color: var(--muted); }
+.dv-wrap { margin-top: var(--s7); display: grid; grid-template-columns: 1.35fr 1fr; gap: var(--s7); align-items: start; }
+.dv-wrap { --lw: 150px; }
+.dv { list-style: none; margin: var(--s4) 0 0; padding: 0; }
+.dv-row { display: grid; grid-template-columns: var(--lw) 1fr; align-items: center; }
+.dv-name { font-size: 16px; font-weight: 600; padding-right: 10px; line-height: 1.2; }
+.dv-name em { display: block; font-style: normal; font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; color: var(--cherry); }
+.dv-track { position: relative; height: 42px; margin-right: 58px; outline: none; }
+.dv-track::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #B9B09A; }
+.dv-track::after { content: ""; position: absolute; left: calc(100% * 100 / 260); top: 0; bottom: 0; width: 1px; background: var(--ink); opacity: .55; }
+.dv-bar { position: absolute; left: 0; top: 12px; height: 18px; background: var(--c-bar); border-radius: 0 4px 4px 0; }
+.dv-track:hover .dv-bar, .dv-track:focus-visible .dv-bar { filter: brightness(1.15); }
+.dv-track:focus-visible { box-shadow: 0 0 0 3px var(--amber); border-radius: 4px; }
+.dv-val { position: absolute; top: 50%; transform: translateY(-50%); margin-left: 8px; font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dv-axis { display: grid; grid-template-columns: var(--lw) 1fr; font-size: 13px; color: var(--muted); }
+.dv-axis div { position: relative; height: 22px; margin-right: 58px; }
+.dv-axis span { position: absolute; top: 4px; transform: translateX(-50%); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dv-axis span:first-child { transform: none; }
+.energy { margin: var(--s4) 0 0; padding: 0; list-style: none; display: grid; gap: var(--s4); }
+.energy li { border-top: 2px solid var(--ink); padding-top: var(--s3); }
+.energy b { display: block; font-size: 19px; }
+.energy p { color: var(--muted); font-size: 17px; }
+
+/* ---------- safety ---------- */
+.safety-top { display: grid; grid-template-columns: 330px 1fr; gap: var(--s7); align-items: stretch; }
+.temp-card { background: var(--cherry); color: #fff; border: 3px solid var(--ink); border-radius: 18px; box-shadow: 6px 6px 0 var(--ink); padding: 26px; display: grid; gap: 10px; align-content: center; }
+.temp-card .label { color: #FFE6C2; }
+.temp-card .deg { font-family: var(--display); font-size: 92px; line-height: 1; }
+.temp-card .rest { justify-self: start; background: #fff; color: var(--cherry); border-radius: 8px; padding: 6px 12px; font-weight: 800; font-size: 19px; }
+.temp-card p { font-size: 16px; color: #FFEFE9; }
+.probe { display: grid; gap: var(--s4); align-content: start; }
+.probe-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s4); flex-wrap: wrap; }
+.probe-read { font-family: var(--display); font-size: 44px; line-height: 1; font-variant-numeric: tabular-nums; }
+.zones { position: relative; height: 26px; border-radius: 13px; overflow: hidden; display: flex; border: 2px solid var(--ink); }
+.zones span { display: block; height: 100%; }
+.z-low { background: #F2C9C4; }
+.z-safe { background: #BFE3CB; }
+.z-dry { background: #F6DDB2; }
+.zone-labels { display: grid; grid-template-columns: 25fr 15fr 15fr; font-size: 13px; color: var(--muted); font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.zone-labels span:nth-child(2) { text-align: center; }
+.zone-labels span:last-child { text-align: right; }
+.probe input[type="range"] { width: 100%; accent-color: var(--ink); height: 28px; }
+.verdict { display: flex; gap: 12px; align-items: flex-start; border: 2px solid var(--ink); border-radius: 12px; padding: 14px 16px; background: #fff; }
+.verdict i { flex: none; font-style: normal; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; color: #fff; }
+.verdict[data-state="low"] i { background: var(--cherry); }
+.verdict[data-state="safe"] i { background: var(--good); }
+.verdict[data-state="dry"] i { background: #B9741A; }
+.verdict b { display: block; }
+.temps { margin-top: var(--s7); }
+.temps-list { margin: var(--s4) 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 var(--s6); }
+.temps-list li { display: flex; justify-content: space-between; gap: var(--s4); border-bottom: 1px solid var(--line); padding: 12px 0; }
+.temps-list b { font-variant-numeric: tabular-nums; text-align: right; max-width: 58%; }
+.steps { margin-top: var(--s7); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s4); }
+.step { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 22px 24px; }
+.step h3 { display: flex; align-items: center; gap: 10px; font-size: 22px; }
+.step h3 span { font-family: var(--display); font-size: 15px; font-weight: 400; background: var(--clover); color: #fff; border-radius: 6px; padding: 3px 9px; }
+.step.bonus h3 span { background: var(--amber); color: var(--ink); }
+.step ul { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; font-size: 17px; }
+.dates { margin-top: var(--s7); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
+.date { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 22px 24px; display: grid; gap: 10px; align-content: start; }
+.sticker { justify-self: start; font-family: var(--label); font-weight: 700; letter-spacing: .08em; font-size: 22px; border: 2px solid var(--ink); border-radius: 6px; padding: 6px 12px; background: #FFF4C9; transform: rotate(-2deg); }
+.date.use .sticker { background: #FBD9D4; }
+.date .who { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; color: var(--muted); }
+.date p { font-size: 17px; }
+.policy { grid-column: 1 / -1; background: var(--ink); color: var(--panel); border-radius: 14px; padding: 20px 24px; }
+.policy b { color: var(--amber); }
+.log { margin-top: var(--s7); }
+.log table { background: #fff; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; }
+.log td, .log th { padding: 10px 14px; }
+
+/* ---------- pitch ---------- */
+.pitch-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s7); align-items: start; }
+.script { display: grid; gap: 0; border: 2px solid var(--ink); border-radius: 14px; background: #fff; overflow: hidden; }
+.cue { display: grid; grid-template-columns: 96px 1fr; gap: var(--s4); padding: 16px 20px; border-top: 1px solid var(--line); }
+.cue:first-child { border-top: 0; }
+.cue time { font-family: var(--label); font-weight: 700; font-size: 15px; color: var(--cherry); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.cue span { display: block; font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; color: var(--muted); }
+.cue p { font-size: 17px; }
+.howto { margin-top: var(--s4); font-size: 16px; color: var(--muted); }
+kbd { font-family: var(--label); font-weight: 700; font-size: 14px; border: 1.5px solid var(--ink); border-bottom-width: 3px; border-radius: 5px; padding: 0 6px; background: #fff; color: var(--ink); }
+.ballot { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 22px 24px; box-shadow: 6px 6px 0 var(--ink); }
+.ballot h3 { font-family: var(--display); font-weight: 400; font-size: 22px; color: var(--cherry); }
+.ballot ul { margin: var(--s4) 0 0; padding: 0; list-style: none; display: grid; gap: var(--s4); }
+.ballot li { display: grid; grid-template-columns: 30px 1fr; gap: var(--s3); }
+.ballot li::before { content: "\2713"; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 5px; display: grid; place-items: center; font-weight: 900; color: var(--clover); }
+.ballot b { display: block; }
+.ballot p { color: var(--muted); font-size: 16px; }
+
+footer { background: var(--ink); color: var(--panel); padding: var(--s7) 0 calc(var(--s7) + 70px); }
+.foot-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--s7); }
+footer .brandmark { font-size: 44px; }
+footer p { color: #CFD8D2; font-size: 16px; margin-top: var(--s2); }
+footer h4 { font-family: var(--label); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 14px; color: var(--amber); }
+footer ul { margin: var(--s3) 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 16px; }
+footer a { color: var(--panel); }
+
+/* ---------- presenter + tooltip ---------- */
+.presenter { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 40; width: min(1000px, calc(100% - 20px)); background: var(--ink); color: var(--panel); border: 2px solid #000; border-radius: 14px; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); padding: 10px 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.presenter[hidden] { display: none; }
+.presenter .btn { box-shadow: 0 3px 0 #000; border-color: #000; padding: 9px 12px; font-size: 14px; }
+.p-where { flex: 1; min-width: 180px; line-height: 1.25; }
+.p-where strong { display: block; font-size: 16px; }
+.p-where span { font-family: var(--label); font-weight: 700; letter-spacing: .06em; font-size: 13px; color: #B8C6BE; text-transform: uppercase; }
+.p-clock { font-family: var(--display); font-size: 24px; min-width: 76px; text-align: center; font-variant-numeric: tabular-nums; }
+.p-clock[data-state="warn"] { color: var(--amber); }
+.p-clock[data-state="over"] { color: #FF8A80; }
+.notes { position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); z-index: 39; width: min(1000px, calc(100% - 20px)); background: #FFFDF6; color: var(--ink); border: 2px solid var(--ink); border-radius: 14px; padding: 16px 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); font-size: 19px; line-height: 1.5; }
+.notes[hidden] { display: none; }
+.notes .kicker { display: block; margin-bottom: 4px; }
+body.presenting { font-size: 19px; }
+.tip { position: fixed; z-index: 60; pointer-events: none; background: var(--ink); color: var(--panel); border-radius: 8px; padding: 8px 12px; font-size: 15px; line-height: 1.35; max-width: 260px; box-shadow: 0 6px 18px rgba(0, 0, 0, .25); }
+.tip[hidden] { display: none; }
+.tip strong { display: block; font-size: 18px; font-weight: 800; }
+.tip span { color: #C9D4CD; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+@media (max-width: 980px) {
+  .req { grid-template-columns: 1fr 120px; }
+  .req > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .swatches { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 860px) {
+  .hero-grid, .brand-grid, .logo-explain, .kit, .plate-grid, .numbers, .ing-grid, .dv-wrap, .safety-top, .pitch-grid, .foot-grid, .menu-note { grid-template-columns: 1fr; }
+  .hero-logo { max-width: 340px; }
+  .logo-explain svg { max-width: 280px; }
+  .numbers .nf { max-width: 360px; }
+  .temps-list { grid-template-columns: 1fr; }
+  .steps, .dates { grid-template-columns: 1fr; }
+  .ticket { transform: none; }
+}
+@media (max-width: 560px) {
+  body { font-size: 17px; }
+  .brandmark { font-size: 26px; }
+  .topbar .wrap { gap: var(--s4); }
+  .item-desc, .item-cal { margin-left: 0; }
+  .course { width: auto; }
+  .dots { display: none; }
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .dv-wrap { --lw: 112px; }
+  .cue { grid-template-columns: 1fr; gap: 4px; }
+  .req { grid-template-columns: 1fr; }
+  .req .pct { text-align: left; }
+  .temp-card .deg { font-size: 76px; }
+}
+.steps { grid-template-columns: repeat(3, 1fr) !important; }
+.temp-card { margin-bottom: 8px; }
+footer{display:none}
+@media (max-width: 860px){.steps{grid-template-columns:1fr !important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brandmark" href="#top">Greenlee&#8217;s</a>
+    <nav aria-label="Sections">
+      <ul class="navlinks" id="navlinks">
+        <li><a href="#brand">Brand</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#myplate">MyPlate</a></li>
+        <li><a href="#ingredients">Ingredients</a></li>
+        <li><a href="#vitamins">Vitamins</a></li>
+        <li><a href="#safety">Safety</a></li>
+        <li><a href="short.html">Short version</a></li>
+      </ul>
+    </nav>
+    <button class="btn btn-amber" id="presentBtn" type="button" aria-pressed="false">Present</button>
+  </div>
+</header>
+<div class="chrome" aria-hidden="true"></div>
+
+<main id="main">
+<section class="hero" id="top" data-stop data-title="Greenlee's Roadside Grill" data-cue="0:00 to 0:10" data-note="Hi, I&#x27;m Danny Greenlee, and this is Greenlee&#x27;s Roadside Grill. Our slogan: get your sizzling, salty greens at Greenlee&#x27;s.">
+  <div class="wrap hero-grid">
+    <div class="hero-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 440" role="img" aria-labelledby="hero-t"><title id="hero-t">Greenlee's Roadside Grill logo: a round retro badge with a rising sun, a maple leaf and a shamrock, a green meadow with a road, and a script banner</title><defs><clipPath id="hero-in"><circle cx="220" cy="220" r="144"/></clipPath><path id="hero-top" d="M57,220 A163,163 0 0 1 383,220"/><path id="hero-bot" d="M35,220 A185,185 0 0 0 405,220"/></defs><circle cx="220" cy="220" r="206" fill="#15231C"/><circle cx="220" cy="220" r="198" fill="#C4302B"/><circle cx="220" cy="220" r="150" fill="#15231C"/><g clip-path="url(#hero-in)"><rect x="60" y="60" width="320" height="320" fill="#CFE7D7"/><polygon points="220,140 183.8,-117.5 256.2,-117.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 376.5,-67.6 427.6,-16.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 477.5,103.8 477.5,176.2" fill="#E9A23B" opacity=".38"/><polygon points="220,140 427.6,296.5 376.5,347.6" fill="#E9A23B" opacity=".38"/><polygon points="220,140 256.2,397.5 183.8,397.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 63.5,347.6 12.4,296.5" fill="#E9A23B" opacity=".38"/><polygon points="220,140 -37.5,176.2 -37.5,103.8" fill="#E9A23B" opacity=".38"/><polygon points="220,140 12.4,-16.5 63.5,-67.6" fill="#E9A23B" opacity=".38"/><circle cx="220" cy="140" r="52" fill="#F2B84B" stroke="#15231C" stroke-width="5"/><path d="M60,300 Q140,262 228,284 Q318,304 380,268 L380,380 L60,380 Z" fill="#3BA36A" stroke="#15231C" stroke-width="4"/><path d="M60,330 Q150,292 246,320 Q330,344 380,306 L380,380 L60,380 Z" fill="#1E6B45" stroke="#15231C" stroke-width="4"/><polygon points="214,283 226,283 292,372 148,372" fill="#2B3A33" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><rect x="218.9" y="292" width="2.2" height="8" fill="#E9A23B"/><rect x="218.4" y="310" width="3.2" height="12" fill="#E9A23B"/><rect x="217.8" y="334" width="4.4" height="18" fill="#E9A23B"/></g><g transform="translate(196 136) rotate(-16) scale(0.82)"><polygon points="0,-50 8,-33 18,-38 14,-13 31,-25 28,-15 46,-19 37,-3 47,1 23,14 28,25 5,19 2,23 2,50 -2,50 -2,23 -5,19 -28,25 -23,14 -47,1 -37,-3 -46,-19 -28,-15 -31,-25 -14,-13 -18,-38 -8,-33" fill="#C4302B" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/></g><g transform="translate(246 141) rotate(14) scale(0.92)"><path d="M0,2 C3,16 9,27 19,36" fill="none" stroke="#FFF6E3" stroke-width="10.5" stroke-linecap="round"/><path d="M0,2 C3,16 9,27 19,36" fill="none" stroke="#1E6B45" stroke-width="6" stroke-linecap="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(0)" fill="#1E6B45" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(120)" fill="#1E6B45" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(240)" fill="#1E6B45" stroke="#FFF6E3" stroke-width="4.5" stroke-linejoin="round"/></g><text font-family="Bungee, 'Arial Black', sans-serif" font-size="29" fill="#FFF6E3" letter-spacing="3"><textPath href="#hero-top" startOffset="50%" text-anchor="middle">ROADSIDE GRILL</textPath></text><text font-family="Bungee, 'Arial Black', sans-serif" font-size="19" fill="#FFF6E3" letter-spacing="2.5"><textPath href="#hero-bot" startOffset="50%" text-anchor="middle">IRISH &amp; FRENCH CANADIAN</textPath></text><circle cx="55" cy="165" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><circle cx="385" cy="165" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><circle cx="56" cy="279" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><circle cx="384" cy="279" r="5.5" fill="#E9A23B" stroke="#15231C" stroke-width="2"/><polygon points="62,198 4,198 24,230 4,262 62,262" fill="#C4302B" stroke="#15231C" stroke-width="5" stroke-linejoin="round"/><polygon points="378,198 436,198 416,230 436,262 378,262" fill="#C4302B" stroke="#15231C" stroke-width="5" stroke-linejoin="round"/><polygon points="44,244 62,262 62,244" fill="#15231C" stroke="#15231C" stroke-width="4" stroke-linejoin="round"/><polygon points="396,244 378,262 378,244" fill="#15231C" stroke="#15231C" stroke-width="4" stroke-linejoin="round"/><rect x="44" y="180" width="352" height="64" fill="#FFF6E3" stroke="#15231C" stroke-width="5"/><text x="223" y="235" text-anchor="middle" font-family="Yellowtail, 'Brush Script MT', cursive" font-size="62" fill="#15231C">Greenlee&#8217;s</text><text x="220" y="232" text-anchor="middle" font-family="Yellowtail, 'Brush Script MT', cursive" font-size="62" fill="#C4302B">Greenlee&#8217;s</text></svg></div>
+    <div>
+      <h1 class="wordmark">Greenlee&#8217;s <span class="wordmark-sub">Roadside Grill</span></h1>
+      <p class="slogan">Get your sizzling, salty greens at Greenlee&#8217;s.</p>
+      <p class="hero-theme">Theme: 1960s diner on wheels with an Irish twist</p>
+      <p class="owner label">Chef and owner <b>Danny Greenlee</b></p>
+    </div>
+  </div>
+</section>
+<div class="checker" aria-hidden="true"></div>
+
+<section id="brand" class="alt" data-stop data-title="Brand, theme and logo" data-cue="0:10 to 0:28" data-note="The truck is a 1960s roadside diner on wheels with an Irish twist. In our logo, the shamrock and maple leaf are the truck&#x27;s roots, the rising sun is all-day energy, and the green meadow comes from my name, because Greenlee means green meadow.">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The truck</h2>
+      <div class="ticket"><span>Step 1</span><b>Brand, theme &amp; logo</b></div>
+    </div>
+    <div class="truck-stage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" role="img" aria-labelledby="tk-t"><title id="tk-t">Side view of the Greenlee's food truck: a mint 1960s step van with a cherry skirt, a checkerboard stripe, a striped awning over the serving window, a menu board, whitewall tires and a script roof sign</title><defs><clipPath id="tk-clip"><path d="M224,76 H726 Q760,76 760,110 V328 Q760,342 746,342 H190 V76 Z"/><path d="M206,108 H130 Q106,108 98,130 L66,226 Q58,250 58,272 V330 Q58,342 70,342 H206 Z"/></clipPath></defs><ellipse cx="420" cy="392" rx="360" ry="13" fill="#15231C" opacity=".16"/><path d="M226,50 q-9,-10 0,-20 q9,-10 0,-20" fill="none" stroke="#15231C" stroke-width="4" stroke-linecap="round" opacity=".5"/><path d="M240,50 q-9,-10 0,-20 q9,-10 0,-20" fill="none" stroke="#15231C" stroke-width="4" stroke-linecap="round" opacity=".5"/><path d="M254,50 q-9,-10 0,-20 q9,-10 0,-20" fill="none" stroke="#15231C" stroke-width="4" stroke-linecap="round" opacity=".5"/><rect x="230" y="58" width="22" height="18" fill="#D3DBD7" stroke="#15231C" stroke-width="3"/><rect x="225" y="52" width="32" height="8" rx="2" fill="#15231C"/><rect x="372" y="60" width="8" height="18" fill="#15231C"/><rect x="570" y="60" width="8" height="18" fill="#15231C"/><rect x="345" y="6" width="260" height="56" rx="12" fill="#FFF6E3" stroke="#15231C" stroke-width="5"/><circle cx="356" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="356" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="375.8" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="375.8" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="395.7" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="395.7" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="415.5" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="415.5" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="435.3" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="435.3" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="455.2" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="455.2" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="475" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="475" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="494.8" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="494.8" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="514.7" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="514.7" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="534.5" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="534.5" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="554.3" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="554.3" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="574.2" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="574.2" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="594" cy="16" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="594" cy="52" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="356" cy="28" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="594" cy="28" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="356" cy="40" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><circle cx="594" cy="40" r="3.4" fill="#E9A23B" stroke="#15231C" stroke-width="1.4"/><text x="477" y="50" text-anchor="middle" font-family="Yellowtail, cursive" font-size="40" fill="#15231C">Greenlee&#8217;s</text><text x="475" y="48" text-anchor="middle" font-family="Yellowtail, cursive" font-size="40" fill="#C4302B">Greenlee&#8217;s</text><g clip-path="url(#tk-clip)"><rect x="40" y="70" width="740" height="280" fill="#CFE7D7"/><rect x="40" y="246" width="740" height="12" fill="#FFF6E3"/><rect x="40" y="258" width="740" height="14" fill="#FFF6E3"/><rect x="40" y="258" width="7" height="7" fill="#15231C"/><rect x="54" y="258" width="7" height="7" fill="#15231C"/><rect x="68" y="258" width="7" height="7" fill="#15231C"/><rect x="82" y="258" width="7" height="7" fill="#15231C"/><rect x="96" y="258" width="7" height="7" fill="#15231C"/><rect x="110" y="258" width="7" height="7" fill="#15231C"/><rect x="124" y="258" width="7" height="7" fill="#15231C"/><rect x="138" y="258" width="7" height="7" fill="#15231C"/><rect x="152" y="258" width="7" height="7" fill="#15231C"/><rect x="166" y="258" width="7" height="7" fill="#15231C"/><rect x="180" y="258" width="7" height="7" fill="#15231C"/><rect x="194" y="258" width="7" height="7" fill="#15231C"/><rect x="208" y="258" width="7" height="7" fill="#15231C"/><rect x="222" y="258" width="7" height="7" fill="#15231C"/><rect x="236" y="258" width="7" height="7" fill="#15231C"/><rect x="250" y="258" width="7" height="7" fill="#15231C"/><rect x="264" y="258" width="7" height="7" fill="#15231C"/><rect x="278" y="258" width="7" height="7" fill="#15231C"/><rect x="292" y="258" width="7" height="7" fill="#15231C"/><rect x="306" y="258" width="7" height="7" fill="#15231C"/><rect x="320" y="258" width="7" height="7" fill="#15231C"/><rect x="334" y="258" width="7" height="7" fill="#15231C"/><rect x="348" y="258" width="7" height="7" fill="#15231C"/><rect x="362" y="258" width="7" height="7" fill="#15231C"/><rect x="376" y="258" width="7" height="7" fill="#15231C"/><rect x="390" y="258" width="7" height="7" fill="#15231C"/><rect x="404" y="258" width="7" height="7" fill="#15231C"/><rect x="418" y="258" width="7" height="7" fill="#15231C"/><rect x="432" y="258" width="7" height="7" fill="#15231C"/><rect x="446" y="258" width="7" height="7" fill="#15231C"/><rect x="460" y="258" width="7" height="7" fill="#15231C"/><rect x="474" y="258" width="7" height="7" fill="#15231C"/><rect x="488" y="258" width="7" height="7" fill="#15231C"/><rect x="502" y="258" width="7" height="7" fill="#15231C"/><rect x="516" y="258" width="7" height="7" fill="#15231C"/><rect x="530" y="258" width="7" height="7" fill="#15231C"/><rect x="544" y="258" width="7" height="7" fill="#15231C"/><rect x="558" y="258" width="7" height="7" fill="#15231C"/><rect x="572" y="258" width="7" height="7" fill="#15231C"/><rect x="586" y="258" width="7" height="7" fill="#15231C"/><rect x="600" y="258" width="7" height="7" fill="#15231C"/><rect x="614" y="258" width="7" height="7" fill="#15231C"/><rect x="628" y="258" width="7" height="7" fill="#15231C"/><rect x="642" y="258" width="7" height="7" fill="#15231C"/><rect x="656" y="258" width="7" height="7" fill="#15231C"/><rect x="670" y="258" width="7" height="7" fill="#15231C"/><rect x="684" y="258" width="7" height="7" fill="#15231C"/><rect x="698" y="258" width="7" height="7" fill="#15231C"/><rect x="712" y="258" width="7" height="7" fill="#15231C"/><rect x="726" y="258" width="7" height="7" fill="#15231C"/><rect x="740" y="258" width="7" height="7" fill="#15231C"/><rect x="754" y="258" width="7" height="7" fill="#15231C"/><rect x="768" y="258" width="7" height="7" fill="#15231C"/><rect x="47" y="265" width="7" height="7" fill="#15231C"/><rect x="61" y="265" width="7" height="7" fill="#15231C"/><rect x="75" y="265" width="7" height="7" fill="#15231C"/><rect x="89" y="265" width="7" height="7" fill="#15231C"/><rect x="103" y="265" width="7" height="7" fill="#15231C"/><rect x="117" y="265" width="7" height="7" fill="#15231C"/><rect x="131" y="265" width="7" height="7" fill="#15231C"/><rect x="145" y="265" width="7" height="7" fill="#15231C"/><rect x="159" y="265" width="7" height="7" fill="#15231C"/><rect x="173" y="265" width="7" height="7" fill="#15231C"/><rect x="187" y="265" width="7" height="7" fill="#15231C"/><rect x="201" y="265" width="7" height="7" fill="#15231C"/><rect x="215" y="265" width="7" height="7" fill="#15231C"/><rect x="229" y="265" width="7" height="7" fill="#15231C"/><rect x="243" y="265" width="7" height="7" fill="#15231C"/><rect x="257" y="265" width="7" height="7" fill="#15231C"/><rect x="271" y="265" width="7" height="7" fill="#15231C"/><rect x="285" y="265" width="7" height="7" fill="#15231C"/><rect x="299" y="265" width="7" height="7" fill="#15231C"/><rect x="313" y="265" width="7" height="7" fill="#15231C"/><rect x="327" y="265" width="7" height="7" fill="#15231C"/><rect x="341" y="265" width="7" height="7" fill="#15231C"/><rect x="355" y="265" width="7" height="7" fill="#15231C"/><rect x="369" y="265" width="7" height="7" fill="#15231C"/><rect x="383" y="265" width="7" height="7" fill="#15231C"/><rect x="397" y="265" width="7" height="7" fill="#15231C"/><rect x="411" y="265" width="7" height="7" fill="#15231C"/><rect x="425" y="265" width="7" height="7" fill="#15231C"/><rect x="439" y="265" width="7" height="7" fill="#15231C"/><rect x="453" y="265" width="7" height="7" fill="#15231C"/><rect x="467" y="265" width="7" height="7" fill="#15231C"/><rect x="481" y="265" width="7" height="7" fill="#15231C"/><rect x="495" y="265" width="7" height="7" fill="#15231C"/><rect x="509" y="265" width="7" height="7" fill="#15231C"/><rect x="523" y="265" width="7" height="7" fill="#15231C"/><rect x="537" y="265" width="7" height="7" fill="#15231C"/><rect x="551" y="265" width="7" height="7" fill="#15231C"/><rect x="565" y="265" width="7" height="7" fill="#15231C"/><rect x="579" y="265" width="7" height="7" fill="#15231C"/><rect x="593" y="265" width="7" height="7" fill="#15231C"/><rect x="607" y="265" width="7" height="7" fill="#15231C"/><rect x="621" y="265" width="7" height="7" fill="#15231C"/><rect x="635" y="265" width="7" height="7" fill="#15231C"/><rect x="649" y="265" width="7" height="7" fill="#15231C"/><rect x="663" y="265" width="7" height="7" fill="#15231C"/><rect x="677" y="265" width="7" height="7" fill="#15231C"/><rect x="691" y="265" width="7" height="7" fill="#15231C"/><rect x="705" y="265" width="7" height="7" fill="#15231C"/><rect x="719" y="265" width="7" height="7" fill="#15231C"/><rect x="733" y="265" width="7" height="7" fill="#15231C"/><rect x="747" y="265" width="7" height="7" fill="#15231C"/><rect x="761" y="265" width="7" height="7" fill="#15231C"/><rect x="775" y="265" width="7" height="7" fill="#15231C"/><rect x="40" y="272" width="740" height="80" fill="#C4302B"/></g><path d="M224,76 H726 Q760,76 760,110 V328 Q760,342 746,342 H190 V76 Z" fill="none" stroke="#15231C" stroke-width="5" stroke-linejoin="round"/><path d="M206,108 H130 Q106,108 98,130 L66,226 Q58,250 58,272 V330 Q58,342 70,342 H206 Z" fill="none" stroke="#15231C" stroke-width="5" stroke-linejoin="round"/><path d="M192,122 H138 Q124,122 119,136 L98,200 H192 Z" fill="#A9D8E3" stroke="#15231C" stroke-width="4" stroke-linejoin="round"/><path d="M150,128 L124,192" stroke="#fff" stroke-width="5" opacity=".55" stroke-linecap="round"/><rect x="112" y="210" width="80" height="120" rx="8" fill="none" stroke="#15231C" stroke-width="3"/><rect x="176" y="262" width="12" height="5" rx="2" fill="#D3DBD7" stroke="#15231C" stroke-width="2"/><circle cx="152" cy="230" r="15" fill="#FFF6E3" stroke="#15231C" stroke-width="3"/><g transform="translate(146 230) rotate(-14) scale(0.2)"><polygon points="0,-50 8,-33 18,-38 14,-13 31,-25 28,-15 46,-19 37,-3 47,1 23,14 28,25 5,19 2,23 2,50 -2,50 -2,23 -5,19 -28,25 -23,14 -47,1 -37,-3 -46,-19 -28,-15 -31,-25 -14,-13 -18,-38 -8,-33" fill="#C4302B"/></g><g transform="translate(158 231) rotate(14) scale(0.24)"><path d="M0,2 C3,16 9,27 19,36" fill="none" stroke="#1E6B45" stroke-width="8" stroke-linecap="round"/><path d="M0,2 C3,16 9,27 19,36" fill="none" stroke="#1E6B45" stroke-width="6" stroke-linecap="round"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(0)" fill="#1E6B45"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(120)" fill="#1E6B45"/><path d="M0,0 C-6,-6 -22,-14 -18,-27 C-15,-37 -3,-35 0,-26 C3,-35 15,-37 18,-27 C22,-14 6,-6 0,0 Z" transform="rotate(240)" fill="#1E6B45"/></g><path d="M98,150 L86,150 L86,178" fill="none" stroke="#15231C" stroke-width="3"/><rect x="80" y="160" width="10" height="24" rx="3" fill="#D3DBD7" stroke="#15231C" stroke-width="3"/><circle cx="72" cy="262" r="13" fill="#FFF6E3" stroke="#15231C" stroke-width="4"/><circle cx="72" cy="262" r="6" fill="#E9A23B"/><rect x="40" y="314" width="84" height="15" rx="7" fill="#D3DBD7" stroke="#15231C" stroke-width="3"/><rect x="738" y="314" width="40" height="15" rx="7" fill="#D3DBD7" stroke="#15231C" stroke-width="3"/><rect x="748" y="200" width="10" height="34" rx="3" fill="#C4302B" stroke="#15231C" stroke-width="3"/><rect x="300" y="128" width="290" height="104" rx="6" fill="#22332B" stroke="#15231C" stroke-width="4"/><line x1="312" y1="160" x2="312" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="334" y1="160" x2="334" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="356" y1="160" x2="356" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="378" y1="160" x2="378" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="400" y1="160" x2="400" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="422" y1="160" x2="422" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="444" y1="160" x2="444" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="466" y1="160" x2="466" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="488" y1="160" x2="488" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="510" y1="160" x2="510" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="532" y1="160" x2="532" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="554" y1="160" x2="554" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="576" y1="160" x2="576" y2="230" stroke="#2E4239" stroke-width="2"/><line x1="312" y1="142" x2="578" y2="142" stroke="#D3DBD7" stroke-width="3"/><rect x="334" y="138" width="18" height="24" fill="#FFF6E3" stroke="#15231C" stroke-width="1.5"/><line x1="338" y1="148" x2="348" y2="148" stroke="#15231C" stroke-width="1.5"/><line x1="338" y1="154" x2="346" y2="154" stroke="#15231C" stroke-width="1.5"/><rect x="362" y="138" width="18" height="24" fill="#FFF6E3" stroke="#15231C" stroke-width="1.5"/><line x1="366" y1="148" x2="376" y2="148" stroke="#15231C" stroke-width="1.5"/><line x1="366" y1="154" x2="374" y2="154" stroke="#15231C" stroke-width="1.5"/><rect x="392" y="138" width="18" height="24" fill="#FFF6E3" stroke="#15231C" stroke-width="1.5"/><line x1="396" y1="148" x2="406" y2="148" stroke="#15231C" stroke-width="1.5"/><line x1="396" y1="154" x2="404" y2="154" stroke="#15231C" stroke-width="1.5"/><rect x="520" y="138" width="18" height="24" fill="#FFF6E3" stroke="#15231C" stroke-width="1.5"/><line x1="524" y1="148" x2="534" y2="148" stroke="#15231C" stroke-width="1.5"/><line x1="524" y1="154" x2="532" y2="154" stroke="#15231C" stroke-width="1.5"/><rect x="548" y="138" width="18" height="24" fill="#FFF6E3" stroke="#15231C" stroke-width="1.5"/><line x1="552" y1="148" x2="562" y2="148" stroke="#15231C" stroke-width="1.5"/><line x1="552" y1="154" x2="560" y2="154" stroke="#15231C" stroke-width="1.5"/><rect x="288" y="230" width="314" height="12" rx="3" fill="#D3DBD7" stroke="#15231C" stroke-width="3"/><rect x="282" y="92" width="33" height="32" fill="#C4302B"/><rect x="314.6" y="92" width="33" height="32" fill="#FFF6E3"/><rect x="347.2" y="92" width="33" height="32" fill="#C4302B"/><rect x="379.8" y="92" width="33" height="32" fill="#FFF6E3"/><rect x="412.4" y="92" width="33" height="32" fill="#C4302B"/><rect x="445" y="92" width="33" height="32" fill="#FFF6E3"/><rect x="477.6" y="92" width="33" height="32" fill="#C4302B"/><rect x="510.2" y="92" width="33" height="32" fill="#FFF6E3"/><rect x="542.8" y="92" width="33" height="32" fill="#C4302B"/><rect x="575.4" y="92" width="33" height="32" fill="#FFF6E3"/><path d="M282,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#C4302B" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M314.6,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#FFF6E3" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M347.2,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#C4302B" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M379.8,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#FFF6E3" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M412.4,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#C4302B" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M445,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#FFF6E3" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M477.6,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#C4302B" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M510.2,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#FFF6E3" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M542.8,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#C4302B" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><path d="M575.4,124 a16.3,16.3 0 0 0 32.6,0 Z" fill="#FFF6E3" stroke="#15231C" stroke-width="3" stroke-linejoin="round"/><rect x="282" y="92" width="326" height="32" fill="none" stroke="#15231C" stroke-width="4"/><line x1="288" y1="138" x2="300" y2="168" stroke="#15231C" stroke-width="3"/><line x1="602" y1="138" x2="590" y2="168" stroke="#15231C" stroke-width="3"/><rect x="616" y="122" width="124" height="112" rx="6" fill="#15231C" stroke="#15231C" stroke-width="4"/><rect x="623" y="129" width="110" height="98" rx="3" fill="none" stroke="#FFF6E3" stroke-width="1.5" opacity=".6"/><text x="678" y="145" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="10.5" letter-spacing=".8" fill="#E9A23B">BLUE PLATE SPECIAL</text><text x="678" y="163" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="10.5" letter-spacing=".8" fill="#FFF6E3">WAGYU CHOPPED</text><text x="678" y="176" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="10.5" letter-spacing=".8" fill="#FFF6E3">GREENS</text><text x="678" y="191" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="10.5" letter-spacing=".8" fill="#FFF6E3">BUFFALO POTATOES</text><text x="678" y="206" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="10.5" letter-spacing=".8" fill="#FFF6E3">EMERALD TWIST</text><text x="678" y="223" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="12" letter-spacing=".8" fill="#E9A23B">$17.99</text><text x="395" y="318" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="17" letter-spacing="2" fill="#FFF6E3">GET YOUR SIZZLING, SALTY GREENS</text><circle cx="150" cy="342" r="55" fill="#15231C"/><circle cx="640" cy="342" r="55" fill="#15231C"/><circle cx="150" cy="342" r="46" fill="#0F1913"/><circle cx="150" cy="342" r="34" fill="#FFF6E3"/><circle cx="150" cy="342" r="27" fill="#0F1913"/><circle cx="150" cy="342" r="21" fill="#D3DBD7" stroke="#15231C" stroke-width="2"/><circle cx="150" cy="342" r="7" fill="#15231C"/><circle cx="640" cy="342" r="46" fill="#0F1913"/><circle cx="640" cy="342" r="34" fill="#FFF6E3"/><circle cx="640" cy="342" r="27" fill="#0F1913"/><circle cx="640" cy="342" r="21" fill="#D3DBD7" stroke="#15231C" stroke-width="2"/><circle cx="640" cy="342" r="7" fill="#15231C"/></svg></div>
+    <div class="road" aria-hidden="true"></div>
+  </div>
+</section>
+<div class="checker" aria-hidden="true"></div>
+
+<section id="menu" data-stop data-title="The Blue Plate Special" data-cue="0:28 to 0:50" data-note="Our signature dish is Wagyu Chopped Greens: seared wagyu chopped over kale, cabbage, carrots and apple with whole wheat croutons and flaky salt. The side is sweet and sour Irish buffalo potatoes, and the drink is the Emerald Twist, a fizzy orange cream with a root beer twist. It&#x27;s craveable because it&#x27;s just really good: hot and cold, salty, sweet, sour and a little spicy.">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Signature dish</h2>
+      <div class="ticket"><span>Step 2</span><b>Entree, side, drink</b></div>
+    </div>
+    <div class="board-frame">
+      <div class="board">
+        <p class="board-title">Blue Plate Special</p>
+        <div class="items">
+          <div class="item">
+            <div class="item-row"><span class="course">Entree</span><span class="item-name">Wagyu Chopped Greens</span><span class="dots"></span><span class="price">12.00</span></div>
+            <p class="item-desc">Seared wagyu, kale, cabbage, carrot, apple, whole wheat croutons, pumpkin seeds, sea salt</p>
+          </div>
+          <div class="item">
+            <div class="item-row"><span class="course">Side</span><span class="item-name">Sweet &amp; Sour Irish Buffalo Potatoes</span><span class="dots"></span><span class="price">5.00</span></div>
+            <p class="item-desc">Roasted potatoes, honey buffalo sauce, Greek yogurt dip</p>
+          </div>
+          <div class="item">
+            <div class="item-row"><span class="course">Drink</span><span class="item-name">Emerald Twist</span><span class="dots"></span><span class="price">4.00</span></div>
+            <p class="item-desc">Fizzy orange cream with a root beer twist</p>
+          </div>
+        </div>
+        <div class="combo"><b>All three: $17.99</b><span>820 calories</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="checker" aria-hidden="true"></div>
+
+<section id="myplate" class="alt" data-stop data-title="MyPlate balance" data-cue="0:50 to 1:01" data-note="It follows the MyPlate split, and the macros land at 47 percent carbs, 19 percent protein and 34 percent fat, all inside the recommended ranges.">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>MyPlate balance</h2>
+      <div class="ticket"><span>Step 2</span><b>MyPlate</b></div>
+    </div>
+    <div class="plate-grid">
+      <svg viewBox="0 0 420 330" role="img" aria-labelledby="plate-t"><title id="plate-t">MyPlate diagram of the Blue Plate Special: vegetables 40 percent, grains 30 percent, protein 20 percent, fruit 10 percent, with dairy in a cup on the side</title><circle cx="165" cy="165" r="152" fill="#FFFDF7" stroke="#15231C" stroke-width="4"/><circle cx="165" cy="165" r="139" fill="none" stroke="#E6DFCB" stroke-width="2"/><g class="sector" tabindex="0" role="img" aria-label="Grains, 30 percent of the plate: Irish brown bread croutons, 100% whole wheat, about 1.5 oz-eq" data-tip-value="30% of the plate" data-tip-label="Grains" data-tip-detail="Irish brown bread croutons, 100% whole wheat, about 1.5 oz-eq"><path d="M165,165 L165.0,39.0 A126,126 0 0 1 284.8,203.9 Z" fill="var(--c-grain)" stroke="#FFFDF7" stroke-width="3" stroke-linejoin="round"/><text x="223.2" y="106.7" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="16" letter-spacing=".6" fill="#15231C">GRAINS</text><text x="223.2" y="122.7" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#15231C">Brown bread</text><text x="223.2" y="138.7" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#15231C">croutons</text></g><g class="sector" tabindex="0" role="img" aria-label="Protein, 20 percent of the plate: Seared wagyu sirloin plus pumpkin seeds, about 3 oz-eq" data-tip-value="20% of the plate" data-tip-label="Protein" data-tip-detail="Seared wagyu sirloin plus pumpkin seeds, about 3 oz-eq"><path d="M165,165 L284.8,203.9 A126,126 0 0 1 165.0,291.0 Z" fill="var(--c-protein)" stroke="#FFFDF7" stroke-width="3" stroke-linejoin="round"/><text x="210.8" y="220.1" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="16" letter-spacing=".6" fill="#FFFFFF">PROTEIN</text><text x="210.8" y="236.1" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#FFFFFF">Wagyu</text></g><g class="sector" tabindex="0" role="img" aria-label="Vegetables, 40 percent of the plate: Kale, cabbage, carrots, scallions and roasted Irish potatoes, about 2 cups" data-tip-value="40% of the plate" data-tip-label="Vegetables" data-tip-detail="Kale, cabbage, carrots, scallions and roasted Irish potatoes, about 2 cups"><path d="M165,165 L165.0,291.0 A126,126 0 0 1 90.9,63.1 Z" fill="var(--c-veg)" stroke="#FFFDF7" stroke-width="3" stroke-linejoin="round"/><text x="94.6" y="171.9" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="16" letter-spacing=".6" fill="#15231C">VEGETABLES</text><text x="94.6" y="187.9" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#15231C">Chopped greens,</text><text x="94.6" y="203.9" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#15231C">Irish potatoes</text></g><g class="sector" tabindex="0" role="img" aria-label="Fruit, 10 percent of the plate: Green apple in the salad, about 1/2 cup, plus orange juice in the Emerald Twist" data-tip-value="10% of the plate" data-tip-label="Fruit" data-tip-detail="Green apple in the salad, about 1/2 cup, plus orange juice in the Emerald Twist"><path d="M165,165 L90.9,63.1 A126,126 0 0 1 165.0,39.0 Z" fill="var(--c-fruit)" stroke="#FFFDF7" stroke-width="3" stroke-linejoin="round"/><text x="136.0" y="67.6" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="16" letter-spacing=".6" fill="#FFFFFF">FRUIT</text><text x="136.0" y="83.6" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#FFFFFF">Apple</text></g><g class="sector" tabindex="0" role="img" aria-label="Dairy, in the cup: 1% milk and Greek yogurt in the shake plus cheese curds, about 1 cup" data-tip-value="The cup on the side" data-tip-label="Dairy" data-tip-detail="milk float in the Emerald Twist plus the Greek yogurt dip, about 3/4 cup"><path d="M334,34 H392 L384,124 H342 Z" fill="var(--c-dairy)" stroke="#15231C" stroke-width="3.5" stroke-linejoin="round"/><path d="M336,52 H390" stroke="#FFFDF7" stroke-width="3" opacity=".7"/><text x="363" y="150" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="16" letter-spacing=".6" fill="#15231C">DAIRY</text><text x="363" y="167" text-anchor="middle" font-family="Barlow, sans-serif" font-weight="600" font-size="13" fill="#15231C">the twist</text></g></svg>
+      <div class="table-scroll">
+        <table class="plate-table">
+          <thead><tr><th>Group</th><th class="num">Plate</th><th>Food</th></tr></thead>
+          <tbody>
+            <tr><td><span class="swatch-dot" style="background:var(--c-veg)"></span>Vegetables</td><td class="num">40%</td><td>Greens, potatoes</td></tr>
+            <tr><td><span class="swatch-dot" style="background:var(--c-grain)"></span>Grains</td><td class="num">30%</td><td>Whole wheat croutons</td></tr>
+            <tr><td><span class="swatch-dot" style="background:var(--c-protein)"></span>Protein</td><td class="num">20%</td><td>Wagyu</td></tr>
+            <tr><td><span class="swatch-dot" style="background:var(--c-fruit)"></span>Fruit</td><td class="num">10%</td><td>Apple, orange juice</td></tr>
+            <tr><td><span class="swatch-dot" style="background:var(--c-dairy)"></span>Dairy</td><td class="num">Cup</td><td>Milk float, yogurt dip</td></tr>
+          </tbody>
+        </table>
+        <table style="margin-top:var(--s5)">
+          <thead><tr><th>Macro</th><th class="num">Ours</th><th class="num">Target</th></tr></thead>
+          <tbody>
+            <tr><td>Carbs</td><td class="num">47%</td><td class="num">45 to 65%</td></tr>
+            <tr><td>Protein</td><td class="num">19%</td><td class="num">10 to 30%</td></tr>
+            <tr><td>Fat</td><td class="num">34%</td><td class="num">25 to 35%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="checker" aria-hidden="true"></div>
+
+<section id="ingredients" data-stop data-title="Quality ingredients" data-cue="1:01 to 1:12" data-note="We roast instead of fry, use olive oil and whole wheat, and sweeten with real orange juice, so there are only 4 grams of added sugar in the whole meal.">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Quality ingredients</h2>
+      <div class="ticket"><span>Step 2</span><b>Ingredients</b></div>
+    </div>
+    <table>
+      <tbody>
+        <tr><td><b>Complex carbs</b></td><td>Potatoes, whole wheat brown bread croutons</td></tr>
+        <tr><td><b>Fiber</b></td><td>13 g</td></tr>
+        <tr><td><b>Healthy fats</b></td><td>Olive oil, pumpkin seeds</td></tr>
+        <tr><td><b>Added sugar</b></td><td>4 g</td></tr>
+        <tr><td><b>Whole foods</b></td><td>Nothing fried or processed</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<div class="checker" aria-hidden="true"></div>
+
+<section id="vitamins" class="alt" data-stop data-title="Vitamins and minerals" data-cue="1:12 to 1:24" data-note="You get vitamin K from the greens, vitamin C from the orange juice and kale, B12 from the wagyu, and half your daily potassium from the potatoes.">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Vitamins &amp; minerals</h2>
+      <div class="ticket"><span>Step 2</span><b>Required nutrients</b></div>
+    </div>
+    <div class="required">
+      <div class="req"><div><span class="kicker">Fat-soluble</span><h3>Vitamin K</h3></div><div><p>Kale, cabbage</p></div><div class="pct"><b>226%</b><span>daily value</span></div></div>
+      <div class="req"><div><span class="kicker">Water-soluble</span><h3>Vitamin C</h3></div><div><p>Orange juice, kale</p></div><div class="pct"><b>169%</b><span>daily value</span></div></div>
+      <div class="req"><div><span class="kicker">Mineral</span><h3>Potassium</h3></div><div><p>Potatoes, wagyu</p></div><div class="pct"><b>50%</b><span>daily value</span></div></div>
+    </div>
+  </div>
+</section>
+<div class="checker" aria-hidden="true"></div>
+
+<section id="safety" data-stop data-title="Food safety plan" data-cue="1:24 to 1:52" data-note="For safety, every steak reaches 145 degrees on a calibrated thermometer, then rests three minutes before we chop it. We wash hands for 20 seconds, keep raw beef on red boards and produce on green, and hold cold food at 41 degrees or below. A sell-by date tells the store how long to display food, a use-by date is the last day it&#x27;s at its best, and nothing past use-by leaves our window.">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Health inspection</h2>
+      <div class="ticket"><span>Step 3</span><b>Food safety</b></div>
+    </div>
+    <div class="temp-card" style="max-width:360px">
+      <span class="label">Wagyu safe internal temp</span>
+      <div class="deg">145&#176;F</div>
+      <span class="rest">+ 3 minute rest</span>
+    </div>
+    <div class="steps">
+      <div class="step"><h3><span>1</span>Clean</h3><ul><li>Wash hands 20 seconds</li><li>Sanitize boards and counters</li></ul></div>
+      <div class="step"><h3><span>2</span>Separate</h3><ul><li>Red board for raw beef, green for produce</li><li>Raw beef on the bottom shelf</li></ul></div>
+      <div class="step"><h3><span>3</span>Cook</h3><ul><li>Food thermometer in the thickest part</li><li>145&#176;F, rest 3 minutes, then chop</li></ul></div>
+    </div>
+    <div class="dates">
+      <div class="date sell"><span class="sticker">SELL BY</span><p>How long the store can display it</p></div>
+      <div class="date use"><span class="sticker">USE BY</span><p>Last day to use it at its best</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="notes" id="notesPanel" hidden><span class="kicker" id="notesCue"></span><p id="notesText"></p></div>
+<div class="presenter" id="presenter" role="toolbar" aria-label="Presenter controls" hidden>
+  <button class="btn" type="button" id="pPrev" aria-label="Previous section">&#8592; Back</button>
+  <div class="p-where"><span id="pIndex">1 of 8</span><strong id="pTitle">Greenlee's Roadside Grill</strong></div>
+  <button class="btn btn-amber" type="button" id="pNext" aria-label="Next section">Next &#8594;</button>
+  <output class="p-clock" id="pClock" aria-label="Time left">2:00</output>
+  <button class="btn" type="button" id="pStart">Start</button>
+  <button class="btn" type="button" id="pReset">Reset</button>
+  <button class="btn" type="button" id="pExit">Exit</button>
+</div>
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var stops = Array.prototype.slice.call(document.querySelectorAll("[data-stop]"));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll("#navlinks a"));
+  var topbar = document.querySelector(".topbar");
+
+  function currentIndex() {
+    var y = topbar.getBoundingClientRect().height + 80;
+    var idx = 0;
+    for (var i = 0; i < stops.length; i++) {
+      if (stops[i].getBoundingClientRect().top <= y) idx = i;
+    }
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) idx = stops.length - 1;
+    return idx;
+  }
+
+  /* ---------- nav highlight ---------- */
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      var idx = currentIndex();
+      var id = stops[idx].id;
+      navLinks.forEach(function (a) {
+        if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+      if (presenting) updatePresenter(idx);
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* ---------- presenter mode ---------- */
+  var presenter = document.getElementById("presenter");
+  var notesPanel = document.getElementById("notesPanel");
+  var presentBtn = document.getElementById("presentBtn");
+  var pIndex = document.getElementById("pIndex");
+  var pTitle = document.getElementById("pTitle");
+  var pClock = document.getElementById("pClock");
+  var pStart = document.getElementById("pStart");
+  var pNotes = document.getElementById("pNotes");
+  var notesCue = document.getElementById("notesCue");
+  var notesText = document.getElementById("notesText");
+  var presenting = false, showNotes = false;
+  var total = 120, elapsedBefore = 0, startedAt = null, timerId = null;
+
+  function updatePresenter(idx) {
+    var s = stops[idx];
+    pIndex.textContent = (idx + 1) + " of " + stops.length;
+    pTitle.textContent = s.getAttribute("data-title") || "";
+    notesCue.textContent = "Say this · " + (s.getAttribute("data-cue") || "");
+    notesText.textContent = s.getAttribute("data-note") || "";
+  }
+  function goTo(idx) {
+    idx = Math.max(0, Math.min(stops.length - 1, idx));
+    stops[idx].scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    updatePresenter(idx);
+  }
+  function fmt(sec) {
+    var neg = sec < 0, s = Math.abs(Math.round(sec));
+    var m = Math.floor(s / 60), r = s % 60;
+    return (neg ? "+" : "") + m + ":" + (r < 10 ? "0" : "") + r;
+  }
+  function elapsed() { return elapsedBefore + (startedAt ? (Date.now() - startedAt) / 1000 : 0); }
+  function tick() {
+    var left = total - elapsed();
+    pClock.textContent = fmt(left);
+    pClock.setAttribute("data-state", left <= 0 ? "over" : left <= 20 ? "warn" : "ok");
+  }
+  function toggleTimer() {
+    if (startedAt) {
+      elapsedBefore = elapsed(); startedAt = null;
+      clearInterval(timerId); timerId = null; pStart.textContent = "Start";
+    } else {
+      startedAt = Date.now(); timerId = setInterval(tick, 250); pStart.textContent = "Pause";
+    }
+    tick();
+  }
+  function resetTimer() {
+    elapsedBefore = 0; if (startedAt) startedAt = Date.now();
+    tick();
+  }
+  function toggleNotes() {
+    showNotes = !showNotes;
+    notesPanel.hidden = !showNotes;
+    
+  }
+  function enterPresent() {
+    presenting = true;
+    document.body.classList.add("presenting");
+    presenter.hidden = false;
+    presentBtn.setAttribute("aria-pressed", "true");
+    presentBtn.textContent = "Presenting";
+    updatePresenter(currentIndex());
+    tick();
+    try {
+      var el = document.documentElement;
+      if (el.requestFullscreen) { var p = el.requestFullscreen(); if (p && p.catch) p.catch(function () {}); }
+    } catch (e) {}
+  }
+  function exitPresent() {
+    presenting = false;
+    document.body.classList.remove("presenting");
+    presenter.hidden = true;
+    notesPanel.hidden = true; showNotes = false;
+    presentBtn.setAttribute("aria-pressed", "false");
+    presentBtn.textContent = "Present";
+    try { if (document.fullscreenElement && document.exitFullscreen) { var p = document.exitFullscreen(); if (p && p.catch) p.catch(function () {}); } } catch (e) {}
+  }
+  presentBtn.addEventListener("click", function () { presenting ? exitPresent() : enterPresent(); });
+  document.getElementById("pPrev").addEventListener("click", function () { goTo(currentIndex() - 1); });
+  document.getElementById("pNext").addEventListener("click", function () { goTo(currentIndex() + 1); });
+  pStart.addEventListener("click", toggleTimer);
+  document.getElementById("pReset").addEventListener("click", resetTimer);
+  
+  document.getElementById("pExit").addEventListener("click", exitPresent);
+  document.addEventListener("keydown", function (e) {
+    if (!presenting) return;
+    var t = e.target;
+    if (t && t.matches && t.matches("input, textarea, select")) return;
+    if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); goTo(currentIndex() + 1); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); goTo(currentIndex() - 1); }
+    else if (e.key === "t" || e.key === "T") { toggleTimer(); }
+    
+    else if (e.key === "Escape") { exitPresent(); }
+  });
+
+  onScroll();
+})();
+</script>
+</body>
+</html>
